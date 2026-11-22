@@ -23,6 +23,7 @@
   <a href="https://addons.mozilla.org/fr/firefox/addon/mister-no-price@mister-guiiug/"><strong>L’installer depuis Modules Firefox</strong></a>
   · <a href="https://github.com/mister-guiiug/mister-no-prices/releases/latest">Télécharger le .xpi signé</a>
   · <a href="README.md">Read in English</a>
+  · <a href="https://github.com/mister-guiiug/mister-no-noise">Extension sœur : Sans bruit</a>
 </p>
 
 <p align="center"><sub>On nous cite : <a href="https://lnkd.in/p/eXi7Z3_8">l’article sur LinkedIn</a></sub></p>

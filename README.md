@@ -23,6 +23,7 @@
   <a href="https://addons.mozilla.org/firefox/addon/mister-no-price@mister-guiiug/"><strong>Get it on Firefox Add-ons</strong></a>
   · <a href="https://github.com/mister-guiiug/mister-no-prices/releases/latest">Download the signed .xpi</a>
   · <a href="README.fr.md">Lire en français</a>
+  · <a href="https://github.com/mister-guiiug/mister-no-noise">Sister extension: No Noise</a>
 </p>
 
 <p align="center"><sub>As featured in <a href="https://lnkd.in/p/eXi7Z3_8">this LinkedIn article</a></sub></p>
