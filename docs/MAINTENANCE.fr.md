@@ -5,6 +5,19 @@
 Publier, déployer, tenir la fiche et le catalogue des règles : ce qu’il faut
 savoir pour maintenir l’extension.
 
+## Manifeste et règles
+
+Les `host_permissions` et `content_scripts[0].matches` du manifeste sont
+**engendrés** depuis `extension/regles.js` :
+
+```bash
+npm run manifeste              # réécrit le manifeste
+node scripts/manifeste.mjs --verifier   # CI
+```
+
+Ne plus les éditer à la main. Après un nouveau site dans les règles : monter
+`revision`, `npm run catalogue`, `npm run manifeste`.
+
 ## Publier une version
 
 La publication est **automatique** : monter `version` dans

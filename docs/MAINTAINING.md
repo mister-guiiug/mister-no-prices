@@ -5,6 +5,19 @@
 Releasing, deploying, keeping the listing and the rule catalogue up to date:
 what you need to know to maintain the extension.
 
+## Manifest and rules
+
+`host_permissions` and `content_scripts[0].matches` are **generated** from
+`extension/regles.js`:
+
+```bash
+npm run manifeste
+node scripts/manifeste.mjs --verifier
+```
+
+Do not edit those lists by hand. After adding a site: bump `revision`,
+`npm run catalogue`, `npm run manifeste`.
+
 ## Releasing a version
 
 Publishing is **automated**: bump `version` in
