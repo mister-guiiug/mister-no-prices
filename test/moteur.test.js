@@ -186,6 +186,14 @@ describe("le manifeste", () => {
     assert.deepEqual([...manifeste.host_permissions].sort(), [...attendus].sort());
   });
 
+  it("peut être réécrit par scripts/manifeste.mjs sans dérive", async () => {
+    const { motifsAttendus, appliquerMotifs } = await import("../scripts/manifeste.mjs");
+    const motifs = motifsAttendus();
+    const suivant = appliquerMotifs(manifeste, motifs);
+    assert.deepEqual([...suivant.host_permissions].sort(), [...motifs].sort());
+    assert.deepEqual([...suivant.content_scripts[0].matches].sort(), [...motifs].sort());
+  });
+
   // Le domaine google.com entier ferait tourner l'extension dans Gmail ou Docs.
   it("ne déclare aucun motif sur tout un domaine de Google", () => {
     assert.ok(!script.matches.some((m) => /^\*:\/\/\*\.google\./.test(m)));

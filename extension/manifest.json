@@ -3,7 +3,7 @@
   "name": "__MSG_extName__",
   "short_name": "__MSG_extShortName__",
   "description": "__MSG_extDescription__",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "default_locale": "fr",
   "author": "GuiiuG",
   "homepage_url": "https://github.com/mister-guiiug/mister-no-prices",

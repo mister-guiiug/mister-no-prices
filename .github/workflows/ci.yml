@@ -43,6 +43,9 @@ jobs:
 
       - run: npm test
 
+      # Motifs du manifeste = domaines/hôtes des règles (une seule source).
+      - run: node scripts/manifeste.mjs --verifier
+
       # Le catalogue distant (regles/regles.json) que les installations lisent
       # chaque jour sur main : à jour de regles.js, et, sur une PR qui change
       # les règles, une révision plus haute que celle de la branche visée —
