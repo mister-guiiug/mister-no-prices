@@ -37,7 +37,7 @@ import { createHash } from "node:crypto";
 import { appendFile, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import webExt from "web-ext";
-import { API, client, etatDe } from "./amo.mjs";
+import { API, client, estDebitLimite, etatDe } from "./amo.mjs";
 import { manifesteDeMiseAJour, nomXpi } from "./mises-a-jour.mjs";
 
 const racine = path.resolve(import.meta.dirname, "..");
@@ -98,20 +98,38 @@ if (apiKey && apiSecret) {
     console.log(`${version} est déjà sur addons.mozilla.org (canal ${enLigne.channel}) : pas de nouvelle soumission.`);
   } else {
     const telechargement = path.join(dossier, ".signature");
-    await webExt.cmd.sign(
-      {
-        sourceDir: source,
-        artifactsDir: telechargement,
-        apiKey,
-        apiSecret,
-        channel: "listed",
-        amoBaseUrl: API,
-        amoMetadata: path.join(racine, "amo", "fiche.json"),
-        // L'attente est faite ci-dessous, avec un délai qui ne fait pas échouer.
-        approvalTimeout: 0,
-      },
-      { shouldExitProgram: false },
-    );
+    try {
+      await webExt.cmd.sign(
+        {
+          sourceDir: source,
+          artifactsDir: telechargement,
+          apiKey,
+          apiSecret,
+          channel: "listed",
+          amoBaseUrl: API,
+          amoMetadata: path.join(racine, "amo", "fiche.json"),
+          // L'attente est faite ci-dessous, avec un délai qui ne fait pas échouer.
+          approvalTimeout: 0,
+        },
+        { shouldExitProgram: false },
+      );
+    } catch (erreur) {
+      // AMO LIMITE LE DÉBIT DES SOUMISSIONS (429), parfois pour des heures :
+      // relevé le 23/11/2026, « Expected available in 40287 seconds ». Ce
+      // n'est pas un échec de la version : le passage s'arrête en vert, et le
+      // passage planifié suivant de publication.yml reprend — il retrouve la
+      // version sur AMO si elle y est arrivée, la soumet sinon. Repris de
+      // mister-no-noise, qui le faisait déjà.
+      if (estDebitLimite(erreur)) {
+        console.log(
+          `::notice::addons.mozilla.org limite le débit des soumissions : reprise au prochain passage. (${String(erreur?.message ?? erreur).slice(0, 200)})`,
+        );
+        await sortie("signe", "non");
+        await rm(dossier, { recursive: true, force: true });
+        process.exit(0);
+      }
+      throw erreur;
+    }
     await rm(telechargement, { recursive: true, force: true });
   }
   const minutes = Number(process.env.ATTENTE_MINUTES ?? 15);

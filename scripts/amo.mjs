@@ -200,3 +200,18 @@ export function client({
     },
   };
 }
+
+/**
+ * L'erreur d'une soumission refusée pour débit limité (429). web-ext la rend
+ * sous la forme « Submission failed (2): 429 » suivie du corps de la réponse
+ * (« Request was throttled. Expected available in N seconds. ») — relevé le
+ * 23/11/2026, N valant plus de onze heures. Ce n'est pas un échec de la
+ * version : publication.yml reprend au passage planifié suivant.
+ *
+ * @param {unknown} erreur
+ * @returns {boolean}
+ */
+export function estDebitLimite(erreur) {
+  const texte = `${erreur?.message ?? ""} ${String(erreur ?? "")}`;
+  return /\b429\b|throttled|Expected available in/iu.test(texte);
+}

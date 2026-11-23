@@ -17,9 +17,15 @@
     "verifier": "node scripts/verifier.mjs",
     "verifier:mise-a-jour": "node scripts/verifier-mise-a-jour.mjs",
     "catalogue": "node scripts/catalogue.mjs",
-    "manifeste": "node scripts/manifeste.mjs"
+    "manifeste": "node scripts/manifeste.mjs",
+    "lint:js": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
+    "eslint": "^9.39.5",
+    "globals": "^17.14.0",
+    "prettier": "^3.10.1",
     "puppeteer-core": "^25.18.1",
     "web-ext": "^10.8.0"
   }

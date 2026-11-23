@@ -81,7 +81,7 @@ jobs:
       - uses: actions/setup-node@v7
         if: steps.version.outputs.a-publier == 'oui'
         with:
-          node-version: 26.13.1
+          node-version-file: .nvmrc
           cache: npm
 
       - if: steps.version.outputs.a-publier == 'oui'
