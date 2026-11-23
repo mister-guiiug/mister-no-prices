@@ -25,7 +25,7 @@
  *   node scripts/check-ai-attribution.mjs --files <f1> <f2> …
  */
 
-import { readFileSync } from 'node:fs';
+import { readFileSync } from "node:fs";
 
 /**
  * Chaque motif porte son explication : le message d'erreur doit apprendre
@@ -33,28 +33,27 @@ import { readFileSync } from 'node:fs';
  */
 export const PATTERNS = [
   {
-    id: 'co-authored-ia',
+    id: "co-authored-ia",
     // L'ancre tolère les marqueurs de commentaire : `// Co-Authored-By: …` dans
     // un fichier est attrapé comme le trailer d'un message de commit.
     regex:
       /^[\s*/#>-]*co-authored-by:.*(claude|anthropic|copilot|chatgpt|openai|gemini|cursor|codeium|devin|noreply@anthropic\.com)/i,
-    quoi: 'une ligne `Co-Authored-By` créditant un assistant IA',
+    quoi: "une ligne `Co-Authored-By` créditant un assistant IA",
   },
   {
-    id: 'generated-with',
-    regex:
-      /(generated with|généré (avec|par)|created (with|by))\s*\[?\s*(claude|chatgpt|copilot|cursor|gemini)/i,
-    quoi: 'une mention « generated with … »',
+    id: "generated-with",
+    regex: /(generated with|généré (avec|par)|created (with|by))\s*\[?\s*(claude|chatgpt|copilot|cursor|gemini)/i,
+    quoi: "une mention « generated with … »",
   },
   {
-    id: 'robot',
+    id: "robot",
     regex: /\u{1F916}/u,
     quoi: "l'émoji robot, qui accompagne ces signatures",
   },
   {
-    id: 'claude-code-url',
+    id: "claude-code-url",
     regex: /claude\.(ai|com)\/code/i,
-    quoi: 'un lien promotionnel vers Claude Code',
+    quoi: "un lien promotionnel vers Claude Code",
   },
 ];
 
@@ -64,17 +63,17 @@ export const PATTERNS = [
  * ne doit pouvoir s'exempter en s'ajoutant une ligne.
  */
 export const EXEMPTS = [
-  'scripts/check-ai-attribution.mjs',
-  'test/check-ai-attribution.test.mjs',
-  '.github/workflows/no-ai-attribution.yml',
-  'AGENTS.md',
-  'CLAUDE.md',
+  "scripts/check-ai-attribution.mjs",
+  "test/check-ai-attribution.test.mjs",
+  ".github/workflows/no-ai-attribution.yml",
+  "AGENTS.md",
+  "CLAUDE.md",
 ];
 
 /** Le chemin est-il celui d'un fichier qui énonce la règle ? */
 export function estExempt(chemin) {
-  const normalise = chemin.replace(/\\/g, '/');
-  return EXEMPTS.some(e => normalise === e || normalise.endsWith(`/${e}`));
+  const normalise = chemin.replace(/\\/g, "/");
+  return EXEMPTS.some((e) => normalise === e || normalise.endsWith(`/${e}`));
 }
 
 /** Les motifs trouvés dans un texte, avec leur numéro de ligne. */
@@ -104,23 +103,23 @@ function main(argv) {
   const cibles = argv.slice(3);
   let faute = false;
 
-  if (mode === '--message') {
-    const trouves = findAttribution(readFileSync(cibles[0], 'utf8'));
+  if (mode === "--message") {
+    const trouves = findAttribution(readFileSync(cibles[0], "utf8"));
     if (trouves.length > 0) {
       faute = true;
-      console.error('\n✗ Message de commit refusé.\n');
+      console.error("\n✗ Message de commit refusé.\n");
       for (const t of trouves) {
         console.error(`  ligne ${t.ligne} : ${t.quoi}`);
         console.error(`    ${t.texte}`);
       }
       console.error(RAPPEL);
     }
-  } else if (mode === '--files') {
+  } else if (mode === "--files") {
     for (const fichier of cibles) {
       if (estExempt(fichier)) continue;
       let contenu;
       try {
-        contenu = readFileSync(fichier, 'utf8');
+        contenu = readFileSync(fichier, "utf8");
       } catch {
         continue; // fichier supprimé : rien à lire
       }
@@ -136,13 +135,13 @@ function main(argv) {
     }
     if (faute) console.error(RAPPEL);
   } else {
-    console.error('Usage : check-ai-attribution.mjs --message <fichier> | --files <fichiers…>');
+    console.error("Usage : check-ai-attribution.mjs --message <fichier> | --files <fichiers…>");
     return 2;
   }
   return faute ? 1 : 0;
 }
 
 // N'exécute rien à l'import : le test importe `findAttribution`.
-if (process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('scripts/check-ai-attribution.mjs')) {
+if (process.argv[1] && process.argv[1].replace(/\\/g, "/").endsWith("scripts/check-ai-attribution.mjs")) {
   process.exit(main(process.argv));
 }

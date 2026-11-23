@@ -89,7 +89,10 @@
   coeur.setAttribute("viewBox", "0 0 24 24");
   coeur.setAttribute("aria-hidden", "true");
   const trace = document.createElementNS(SVG, "path");
-  trace.setAttribute("d", "M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z");
+  trace.setAttribute(
+    "d",
+    "M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z",
+  );
   coeur.append(trace);
   const libelle = document.createElement("span");
   bouton.append(coeur, libelle);

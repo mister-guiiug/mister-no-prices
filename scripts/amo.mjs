@@ -93,7 +93,9 @@ export function client({
     }
     if (!reponse.ok) {
       const detail = await reponse.text().catch(() => "");
-      throw new Error(`AMO ${reponse.status} sur ${methode} ${url}${detail.startsWith("{") ? ` : ${detail.slice(0, 500)}` : ""}`);
+      throw new Error(
+        `AMO ${reponse.status} sur ${methode} ${url}${detail.startsWith("{") ? ` : ${detail.slice(0, 500)}` : ""}`,
+      );
     }
     if (attendu === "rien") return null;
     if (attendu === "json") {

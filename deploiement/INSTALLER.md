@@ -4,12 +4,12 @@ Extension Firefox qui masque les prix pendant qu'on fait défiler une boutique
 avec un enfant : il choisit ce qui lui plaît, sans savoir ce que ça coûte.
 Firefox 140 ou plus récent, sur ordinateur.
 
-| Fichier du paquet                 | À quoi il sert                                                       |
-| --------------------------------- | -------------------------------------------------------------------- |
+| Fichier du paquet                  | À quoi il sert                                                       |
+| ---------------------------------- | -------------------------------------------------------------------- |
 | `mister-no-prices-{{version}}.xpi` | l'extension **signée par Mozilla** : installation durable (§ 1, § 3) |
 | `mister-no-prices-{{version}}.zip` | l'extension non signée : essai, ou Firefox Developer Edition (§ 2)   |
-| `policies.json`                   | imposer l'extension sur un ordinateur familial (§ 3)                 |
-| `SHA256SUMS`                      | vérifier que les fichiers n'ont pas été altérés (§ 4)                |
+| `policies.json`                    | imposer l'extension sur un ordinateur familial (§ 3)                 |
+| `SHA256SUMS`                       | vérifier que les fichiers n'ont pas été altérés (§ 4)                |
 
 Le `.xpi` n'existe que si le paquet a été signé. S'il manque, passer au § 2.
 

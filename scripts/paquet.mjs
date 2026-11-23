@@ -53,8 +53,12 @@ try {
 const lireJson = async (fichier) => JSON.parse(await readFile(fichier, "utf8"));
 /** Une sortie du pas de workflow, si le script tourne dans un workflow. */
 const sortie = async (cle, valeur) => {
-  if (process.env.GITHUB_OUTPUT) await appendFile(process.env.GITHUB_OUTPUT, `${cle}=${valeur}
-`);
+  if (process.env.GITHUB_OUTPUT)
+    await appendFile(
+      process.env.GITHUB_OUTPUT,
+      `${cle}=${valeur}
+`,
+    );
 };
 
 const manifeste = await lireJson(path.join(source, "manifest.json"));
@@ -136,14 +140,20 @@ if (apiKey && apiSecret) {
   enLigne = await amo.attendre(id, version, { delai: minutes * 60_000 });
   if (!enLigne) throw new Error(`${version} introuvable sur addons.mozilla.org après la soumission`);
   if (enLigne.channel !== "listed") {
-    throw new Error(`${version} a été signée hors catalogue (canal ${enLigne.channel}) : monter la version pour la publier`);
+    throw new Error(
+      `${version} a été signée hors catalogue (canal ${enLigne.channel}) : monter la version pour la publier`,
+    );
   }
   const etat = etatDe(enLigne);
   if (etat === "refusee") {
-    throw new Error(`${version} a été refusée par addons.mozilla.org : lire le motif dans le tableau de bord du développeur`);
+    throw new Error(
+      `${version} a été refusée par addons.mozilla.org : lire le motif dans le tableau de bord du développeur`,
+    );
   }
   if (etat === "en-relecture") {
-    console.log(`::notice::${version} est soumise à addons.mozilla.org et attend sa relecture : pas de paquet ni de release pour l'instant. Le prochain passage reprendra.`);
+    console.log(
+      `::notice::${version} est soumise à addons.mozilla.org et attend sa relecture : pas de paquet ni de release pour l'instant. Le prochain passage reprendra.`,
+    );
     await sortie("signe", "non");
     await rm(dossier, { recursive: true, force: true });
     process.exit(0);

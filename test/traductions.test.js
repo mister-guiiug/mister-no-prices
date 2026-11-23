@@ -58,27 +58,38 @@ describe("les traductions", () => {
       // du message doit être définie dans la même entrée, chaque définition
       // servir, et les valeurs être celles du français.
       it("garde les marques ($NOM$), définies et utilisées, aux mêmes valeurs", () => {
-        const contenus = (m) => Object.values(m.placeholders ?? {}).map((p) => p.content).sort();
+        const contenus = (m) =>
+          Object.values(m.placeholders ?? {})
+            .map((p) => p.content)
+            .sort();
         for (const [cle, ref] of Object.entries(reference)) {
           const tr = messages[cle];
           if (!tr) continue;
           assert.equal(typeof tr.message, "string", cle);
           assert.ok(tr.message.trim().length > 0, `${cle} vide`);
-          const definies = Object.keys(tr.placeholders ?? {}).map((n) => n.toUpperCase()).sort();
+          const definies = Object.keys(tr.placeholders ?? {})
+            .map((n) => n.toUpperCase())
+            .sort();
           assert.deepEqual([...new Set(marques(tr.message))].sort(), definies, `${cle} : marques et définitions`);
           assert.deepEqual(contenus(tr), contenus(ref), `${cle} : valeurs des marques`);
         }
       });
 
       it("garde les points des nouveautés, séparés par « | »", () => {
-        assert.equal(messages.nouveautesPoints.message.split("|").length, reference.nouveautesPoints.message.split("|").length);
+        assert.equal(
+          messages.nouveautesPoints.message.split("|").length,
+          reference.nouveautesPoints.message.split("|").length,
+        );
       });
 
       // Les limites des boutiques d'extensions : nom court, description d'une ligne.
       it("tient dans les limites du nom et de la description", () => {
         assert.ok(messages.extName.message.length <= 45, `extName : ${messages.extName.message.length}`);
         assert.ok(messages.extShortName.message.length <= 20, `extShortName : ${messages.extShortName.message.length}`);
-        assert.ok(messages.extDescription.message.length <= 132, `extDescription : ${messages.extDescription.message.length}`);
+        assert.ok(
+          messages.extDescription.message.length <= 132,
+          `extDescription : ${messages.extDescription.message.length}`,
+        );
         assert.ok([...messages.badgePause.message].length <= 4, `badgePause : ${messages.badgePause.message}`);
       });
     });

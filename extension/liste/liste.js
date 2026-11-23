@@ -157,7 +157,11 @@
     const noms = prenoms();
     $("prenoms").replaceChildren(...noms.map((nom) => Object.assign(document.createElement("option"), { value: nom })));
     if (filtre !== "" && filtre !== SANS_PRENOM && !noms.includes(filtre)) filtre = "";
-    const options = [["", t("listeFiltreTous")], ...noms.map((nom) => [nom, nom]), [SANS_PRENOM, t("listeFiltreSansPrenom")]];
+    const options = [
+      ["", t("listeFiltreTous")],
+      ...noms.map((nom) => [nom, nom]),
+      [SANS_PRENOM, t("listeFiltreSansPrenom")],
+    ];
     $("filtre").replaceChildren(
       ...options.map(([valeur, texte]) =>
         Object.assign(document.createElement("option"), {

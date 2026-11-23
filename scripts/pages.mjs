@@ -7,7 +7,10 @@
  */
 // Le site mobile d'Amazon n'a pas toujours le conteneur des résultats ; le
 // second sélecteur, plus large, attrape aussi les pages promotionnelles.
-const LIEN_AMAZON = ['[data-component-type="s-search-result"] a[href*="/dp/"]', 'a[href*="/dp/"]:not([href*="/sspa/"])'];
+const LIEN_AMAZON = [
+  '[data-component-type="s-search-result"] a[href*="/dp/"]',
+  'a[href*="/dp/"]:not([href*="/sspa/"])',
+];
 export const PAGES = {
   "amazon.fr": { liste: "https://www.amazon.fr/s?k=casque+audio", fiche: LIEN_AMAZON },
   "amazon.com": { liste: "https://www.amazon.com/s?k=headphones", fiche: LIEN_AMAZON },
@@ -42,8 +45,14 @@ export const PAGES = {
   "e.leclerc": { liste: "https://www.e.leclerc/recherche?q=casque+audio", fiche: 'a[href*="/fp/"]' },
   "carrefour.fr": { liste: "https://www.carrefour.fr/s?q=casque+audio", fiche: 'a[href*="/p/"]' },
   "auchan.fr": { liste: "https://www.auchan.fr/recherche?text=casque+audio", fiche: 'a[href*="/pr-"]' },
-  "ebay.fr": { liste: "https://www.ebay.fr/sch/i.html?_nkw=casque+audio", fiche: 'a[href*="/itm/"]:not([href*="/itm/123456"])' },
-  "ebay.com": { liste: "https://www.ebay.com/sch/i.html?_nkw=headphones", fiche: 'a[href*="/itm/"]:not([href*="/itm/123456"])' },
+  "ebay.fr": {
+    liste: "https://www.ebay.fr/sch/i.html?_nkw=casque+audio",
+    fiche: 'a[href*="/itm/"]:not([href*="/itm/123456"])',
+  },
+  "ebay.com": {
+    liste: "https://www.ebay.com/sch/i.html?_nkw=headphones",
+    fiche: 'a[href*="/itm/"]:not([href*="/itm/123456"])',
+  },
   "aliexpress.com": {
     liste: "https://fr.aliexpress.com/w/wholesale-casque-audio.html",
     fiche: 'a[href*="/item/"]',

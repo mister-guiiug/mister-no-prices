@@ -21,7 +21,11 @@ function charger({ reponse = null } = {}) {
   };
   const fetch = async () => {
     if (reponse instanceof Error) throw reponse;
-    return { ok: reponse?.ok ?? true, status: reponse?.status ?? 200, json: async () => structuredClone(reponse?.corps) };
+    return {
+      ok: reponse?.ok ?? true,
+      status: reponse?.status ?? 200,
+      json: async () => structuredClone(reponse?.corps),
+    };
   };
   const contexte = vm.createContext({ browser, fetch, console });
   for (const f of ["extension/regles.js", "extension/commun/catalogue.js"]) vm.runInContext(lire(f), contexte);
@@ -63,7 +67,13 @@ describe("le catalogue des règles", () => {
 describe("la validation d'un catalogue distant", () => {
   const { C } = charger();
   const avecRegle = (regle) => avecRevision("2099-01-01.1", (c) => ({ ...c, regles: [...c.regles, regle] }));
-  const regle = (champs) => ({ id: "exemple", nom: "Exemple", domaines: ["exemple.fr"], masquer: [".prix"], ...champs });
+  const regle = (champs) => ({
+    id: "exemple",
+    nom: "Exemple",
+    domaines: ["exemple.fr"],
+    masquer: [".prix"],
+    ...champs,
+  });
 
   it("accepte une règle nouvelle bien formée", () => {
     const c = C.valider(avecRegle(regle({ chemins: ["/boutique"], fiche: { titre: "h1", prix: ".prix" } })));
@@ -79,7 +89,7 @@ describe("la validation d'un catalogue distant", () => {
     ".prix { color: red }",
     ".prix;",
     "/* .prix */",
-    "[data-x=\"a\"",
+    '[data-x="a"',
     ".a\\62",
     " .prix",
     "",
@@ -91,7 +101,7 @@ describe("la validation d'un catalogue distant", () => {
   }
 
   it("accepte les sélecteurs réels : combinateur, guillemets, :not(), attributs", () => {
-    for (const s of [".a > .b", "[aria-label^=\"L'ancien prix\"]", "a:not([href*=\"/x/\"])", '[class*="price"]']) {
+    for (const s of [".a > .b", '[aria-label^="L\'ancien prix"]', 'a:not([href*="/x/"])', '[class*="price"]']) {
       assert.ok(C.selecteurSur(s), s);
     }
   });
@@ -132,7 +142,10 @@ describe("le cache et le téléchargement", () => {
   });
 
   it("rejette un catalogue distant invalide, et garde le précédent", async () => {
-    const abime = avecRevision("2099-01-01.1", (c) => ({ ...c, regles: [{ id: "x", nom: "X", domaines: ["x.fr"], masquer: ["a){}"] }] }));
+    const abime = avecRevision("2099-01-01.1", (c) => ({
+      ...c,
+      regles: [{ id: "x", nom: "X", domaines: ["x.fr"], masquer: ["a){}"] }],
+    }));
     const { C, local } = charger({ reponse: { corps: abime } });
     const resultat = await C.telecharger();
     assert.equal(resultat.statut, "rejete");

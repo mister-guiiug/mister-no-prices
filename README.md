@@ -59,7 +59,7 @@ conversation:
 - they **compare**: “my brother got an €80 present, I got a €30 one”;
 - the **budget**, which is the parents’ business, becomes a topic.
 
-Without prices, a child chooses on what the object *is* — pictures,
+Without prices, a child chooses on what the object _is_ — pictures,
 description, reviews — and money stays between adults. The same idea helps
 anyone who wants to compare products without being anchored by their price.
 
@@ -74,7 +74,7 @@ anyone who wants to compare products without being anchored by their price.
 - **♥ My list**: on a product page, the child marks what they like; the parent
   opens the list — with prices — from the toolbar. Items can carry a first name,
   be reordered, filtered by child, shared and printed.
-- **Parent code** (4 to 8 digits): required for anything that *reveals* prices
+- **Parent code** (4 to 8 digits): required for anything that _reveals_ prices
   — turning masking off, pausing, disabling a site, showing prices in the wish
   list. Turning masking back on never asks for it.
 - **Pause** for 5, 15 or 60 minutes, then masking resumes on its own. A
@@ -93,14 +93,14 @@ without a currency is never taken for a price.
 
 Firefox 140 or later on desktop, Firefox for Android 142 or later.
 
-| Method | Lasts | How |
-| ------ | ----- | --- |
-| **Firefox Add-ons** (recommended) | permanent, auto-updates | open the [extension page](https://addons.mozilla.org/firefox/addon/mister-no-price@mister-guiiug/) → *Add to Firefox* |
-| **Signed file from a release** | permanent, auto-updates | open the `.xpi` of the [latest release](https://github.com/mister-guiiug/mister-no-prices/releases/latest) in Firefox |
-| **Temporary, from source** | until Firefox restarts | `about:debugging#/runtime/this-firefox` → *Load Temporary Add-on…* → pick `extension/manifest.json` |
+| Method                            | Lasts                   | How                                                                                                                   |
+| --------------------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **Firefox Add-ons** (recommended) | permanent, auto-updates | open the [extension page](https://addons.mozilla.org/firefox/addon/mister-no-price@mister-guiiug/) → _Add to Firefox_ |
+| **Signed file from a release**    | permanent, auto-updates | open the `.xpi` of the [latest release](https://github.com/mister-guiiug/mister-no-prices/releases/latest) in Firefox |
+| **Temporary, from source**        | until Firefox restarts  | `about:debugging#/runtime/this-firefox` → _Load Temporary Add-on…_ → pick `extension/manifest.json`                   |
 
 After installing, allow the extension in **private windows** if children use
-them: `about:addons` → *No Prices* → *Run in Private Windows* → *Allow*.
+them: `about:addons` → _No Prices_ → _Run in Private Windows_ → _Allow_.
 
 For a family computer, the deployment package ships a Firefox **enterprise
 policy** that installs the extension for every session and prevents removing
@@ -108,13 +108,13 @@ or disabling it — see [Maintaining](docs/MAINTAINING.md#deployment-package).
 
 ## Supported sites
 
-| Category | Sites |
-| -------- | ----- |
-| **Stores** | Amazon (23 countries), AliExpress, Auchan, Boulanger, Carrefour, Cdiscount, Darty, Decathlon (11 countries), E.Leclerc, eBay, Fnac, LDLC, ManoMano, Rue du Commerce, Zalando |
-| **Deals** | Dealabs |
-| **Classifieds** | Craigslist, Facebook Marketplace (`/marketplace` only), Kleinanzeigen, Leboncoin, Marktplaats, Milanuncios, ParuVendu, Subito, Vivastreet, Wallapop |
-| **Second-hand** | Back Market, Cash Express, Catawiki, Chrono24, Delcampe, Discogs, Easy Cash, Reverb, Vestiaire Collective, Vinted (12 countries) |
-| **Search** | Google (search results and Google Images, 9 country domains) |
+| Category        | Sites                                                                                                                                                                        |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Stores**      | Amazon (23 countries), AliExpress, Auchan, Boulanger, Carrefour, Cdiscount, Darty, Decathlon (11 countries), E.Leclerc, eBay, Fnac, LDLC, ManoMano, Rue du Commerce, Zalando |
+| **Deals**       | Dealabs                                                                                                                                                                      |
+| **Classifieds** | Craigslist, Facebook Marketplace (`/marketplace` only), Kleinanzeigen, Leboncoin, Marktplaats, Milanuncios, ParuVendu, Subito, Vivastreet, Wallapop                          |
+| **Second-hand** | Back Market, Cash Express, Catawiki, Chrono24, Delcampe, Discogs, Easy Cash, Reverb, Vestiaire Collective, Vinted (12 countries)                                             |
+| **Search**      | Google (search results and Google Images, 9 country domains)                                                                                                                 |
 
 Every site is checked by an automated run in a real Firefox. Some answer
 automated browsers with an anti-bot page and could only be checked partly: the

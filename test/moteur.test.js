@@ -91,7 +91,7 @@ describe("construireFeuille", () => {
     assert.ok(feuille.includes(`[${moteur.ATTRIBUT_ECLATE}]`));
   });
 
-  it("échoue fermée : tout est conditionné à l'absence de data-sans-prix=\"off\"", () => {
+  it('échoue fermée : tout est conditionné à l\'absence de data-sans-prix="off"', () => {
     assert.ok(feuille.startsWith(':root:not([data-sans-prix="off"]) :is('));
   });
 
@@ -201,14 +201,26 @@ describe("le manifeste", () => {
 
   it("charge les règles et le moteur avant le script de masquage", () => {
     const ordre = (f) => script.js.indexOf(f);
-    for (const f of ["commun/reglages.js", "regles.js", "commun/catalogue.js", "content/detection.js", "content/moteur.js"]) {
+    for (const f of [
+      "commun/reglages.js",
+      "regles.js",
+      "commun/catalogue.js",
+      "content/detection.js",
+      "content/moteur.js",
+    ]) {
       assert.ok(ordre(f) >= 0 && ordre(f) < ordre("content/masquage.js"), f);
     }
   });
 
   it("charge la liste et l'extraction avant le bouton ♥", () => {
     const ordre = (f) => script.js.indexOf(f);
-    for (const f of ["commun/reglages.js", "commun/envies.js", "regles.js", "content/moteur.js", "content/produit.js"]) {
+    for (const f of [
+      "commun/reglages.js",
+      "commun/envies.js",
+      "regles.js",
+      "content/moteur.js",
+      "content/produit.js",
+    ]) {
       assert.ok(ordre(f) >= 0 && ordre(f) < ordre("content/envies.js"), f);
     }
   });

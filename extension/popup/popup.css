@@ -29,7 +29,9 @@ body {
   width: 18rem;
   background: var(--fond);
   color: var(--texte);
-  font: 0.875rem/1.4 system-ui, sans-serif;
+  font:
+    0.875rem/1.4 system-ui,
+    sans-serif;
 }
 
 main {

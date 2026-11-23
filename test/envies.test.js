@@ -101,8 +101,7 @@ describe("extraireProduit — données structurées", () => {
   vm.runInContext(lire("content/produit.js"), ctx);
   const document = (...blocs) => ({
     URL: "https://www.exemple.fr/annonce/123?ref=liste",
-    querySelectorAll: (s) =>
-      s.includes("ld+json") ? blocs.map((b) => ({ textContent: JSON.stringify(b) })) : [],
+    querySelectorAll: (s) => (s.includes("ld+json") ? blocs.map((b) => ({ textContent: JSON.stringify(b) })) : []),
     querySelector: () => null,
   });
   const extraire = (...blocs) => ctx.SansPrixProduit.extraireProduit(document(...blocs));
@@ -126,7 +125,10 @@ describe("extraireProduit — données structurées", () => {
   });
 
   it("ne voit pas de fiche dans une page sans produit", () => {
-    assert.equal(extraire({ "@type": "BreadcrumbList", itemListElement: [] }, { "@type": "WebSite", name: "Annonces" }), null);
+    assert.equal(
+      extraire({ "@type": "BreadcrumbList", itemListElement: [] }, { "@type": "WebSite", name: "Annonces" }),
+      null,
+    );
   });
 });
 
@@ -143,7 +145,12 @@ describe("extraireProduit — règle du site", () => {
     const elements = {
       [fiche.titre]: [{ textContent: " Blender portable Ninja Blast - 530ml " }],
       [fiche.prix]: [{ textContent: "27,19€" }],
-      [fiche.image]: [{ getAttribute: (a) => (a === "content" ? "https://static-pepper.dealabs.com/threads/raw/97SsJ/3460425_1/re/1024x1024/qt/60" : null) }],
+      [fiche.image]: [
+        {
+          getAttribute: (a) =>
+            a === "content" ? "https://static-pepper.dealabs.com/threads/raw/97SsJ/3460425_1/re/1024x1024/qt/60" : null,
+        },
+      ],
     };
     const doc = {
       URL: "https://www.dealabs.com/bons-plans/blender-portable-ninja-blast-3460425",
@@ -206,7 +213,10 @@ describe("la liste d'envies", () => {
     assert.equal((await Envies.lire()).find((a) => a.url === "https://a/2").pour, undefined);
     await Envies.deplacer("https://a/1", -1);
     await Envies.deplacer("https://a/3", -1);
-    assert.deepEqual((await Envies.lire()).map((a) => a.url), ["https://a/3", "https://a/1", "https://a/2"]);
+    assert.deepEqual(
+      (await Envies.lire()).map((a) => a.url),
+      ["https://a/3", "https://a/1", "https://a/2"],
+    );
   });
 
   it("retire, vide, et ignore une entrée abîmée", async () => {
@@ -214,7 +224,10 @@ describe("la liste d'envies", () => {
     await Envies.ajouter({ url: "https://a/1", titre: "Un" });
     await Envies.ajouter({ url: "https://a/2", titre: "Deux" });
     await Envies.retirer("https://a/1");
-    assert.deepEqual((await Envies.lire()).map((a) => a.url), ["https://a/2"]);
+    assert.deepEqual(
+      (await Envies.lire()).map((a) => a.url),
+      ["https://a/2"],
+    );
     zones.local.envies.push({ titre: "sans adresse" }, null);
     assert.equal((await Envies.lire()).length, 1);
     await Envies.vider();

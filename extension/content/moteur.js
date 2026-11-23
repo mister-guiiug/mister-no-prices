@@ -17,11 +17,7 @@
    */
   function trouverRegle(hote, regles) {
     const h = hote.toLowerCase().replace(/\.$/, "");
-    return (
-      regles.find(
-        (r) => r.hotes.includes(h) || r.domaines.some((d) => h === d || h.endsWith(`.${d}`)),
-      ) ?? null
-    );
+    return regles.find((r) => r.hotes.includes(h) || r.domaines.some((d) => h === d || h.endsWith(`.${d}`))) ?? null;
   }
 
   /**
@@ -36,10 +32,7 @@
 
   /** Les motifs de correspondance que le manifeste doit déclarer pour ces règles. */
   function motifsDuManifeste(regles) {
-    return regles.flatMap((r) => [
-      ...r.domaines.map((d) => `*://*.${d}/*`),
-      ...r.hotes.map((h) => `*://${h}/*`),
-    ]);
+    return regles.flatMap((r) => [...r.domaines.map((d) => `*://*.${d}/*`), ...r.hotes.map((h) => `*://${h}/*`)]);
   }
 
   /**

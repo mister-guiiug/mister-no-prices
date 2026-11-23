@@ -23,16 +23,11 @@
   const NOMBRE = "\\d+(?:[.,'’]\\d+|\\s\\d{3}(?!\\d))*";
 
   const DEVISE_AVANT =
-    `(?:(?<!${LETTRE})(?:US|CA|AU|NZ|HK|MX|[ACRS])\\$` +
-    `|[€$£¥￥₹₩₺₽₱]` +
-    `|(?<!${LETTRE})(?:${CODES})(?!${LETTRE}))`;
+    `(?:(?<!${LETTRE})(?:US|CA|AU|NZ|HK|MX|[ACRS])\\$` + `|[€$£¥￥₹₩₺₽₱]` + `|(?<!${LETTRE})(?:${CODES})(?!${LETTRE}))`;
 
   const DEVISE_APRES = `(?:[€$£¥￥₹₺₽円]|(?:zł|kr|TL|${CODES})(?!${LETTRE}))`;
 
-  const MONTANT = new RegExp(
-    `${DEVISE_AVANT}\\s?${NOMBRE}|${NOMBRE}\\s?${DEVISE_APRES}`,
-    "gu",
-  );
+  const MONTANT = new RegExp(`${DEVISE_AVANT}\\s?${NOMBRE}|${NOMBRE}\\s?${DEVISE_APRES}`, "gu");
 
   const CHIFFRE = /\d/;
 

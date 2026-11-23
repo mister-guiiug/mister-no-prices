@@ -59,14 +59,14 @@ puis au catalogue. Chaque release le porte encore.
 `npm run paquet` prépare, dans `web-ext-artifacts/mister-no-prices-<version>/`,
 de quoi installer l’extension sur un poste sans rien savoir de ce dépôt :
 
-| Fichier | Rôle |
-| ------- | ---- |
-| `mister-no-prices-<version>.xpi` | l’extension signée par Mozilla — seulement avec des clés d’API |
-| `mister-no-prices-<version>.zip` | l’extension non signée |
-| `INSTALLER.md` | les façons d’installer, pas à pas, pour qui n’est pas développeur |
-| `policies.json` | stratégie d’entreprise Firefox qui **impose** l’extension sur un ordinateur familial : installée pour toutes les sessions, ni retirable ni désactivable depuis `about:addons` |
-| `updates.json` | ce que lisent les copies installées jusqu’à la 1.7.0 pour se mettre à jour |
-| `SHA256SUMS` | empreintes, pour `sha256sum -c` |
+| Fichier                          | Rôle                                                                                                                                                                          |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mister-no-prices-<version>.xpi` | l’extension signée par Mozilla — seulement avec des clés d’API                                                                                                                |
+| `mister-no-prices-<version>.zip` | l’extension non signée                                                                                                                                                        |
+| `INSTALLER.md`                   | les façons d’installer, pas à pas, pour qui n’est pas développeur                                                                                                             |
+| `policies.json`                  | stratégie d’entreprise Firefox qui **impose** l’extension sur un ordinateur familial : installée pour toutes les sessions, ni retirable ni désactivable depuis `about:addons` |
+| `updates.json`                   | ce que lisent les copies installées jusqu’à la 1.7.0 pour se mettre à jour                                                                                                    |
+| `SHA256SUMS`                     | empreintes, pour `sha256sum -c`                                                                                                                                               |
 
 Le guide et la stratégie viennent de [`deploiement/`](../deploiement/), remplis
 à la version et à l’identifiant du manifeste.
@@ -84,13 +84,13 @@ La fiche est tenue par le dépôt.
 ses sources changent sur `main`, et chaque jour : AMO ne lit le nom et le
 résumé du manifeste qu’à la création de la fiche, et jamais son icône.
 
-| Sur la fiche | Vient de |
-| ------------ | -------- |
-| nom, résumé | `extName`, `extDescription` de chaque langue de l’extension que la fiche propose |
+| Sur la fiche           | Vient de                                                                                                                                                                    |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| nom, résumé            | `extName`, `extDescription` de chaque langue de l’extension que la fiche propose                                                                                            |
 | description, catégorie | [`amo/fiche.json`](../amo/fiche.json), une description par langue, en Markdown limité (`**gras**`, listes en `- `, liens `[texte](adresse)`) : AMO affiche le HTML tel quel |
-| page d’accueil | `homepage_url` du manifeste |
-| icône | `extension/icons/icone-128.png` |
-| captures d’écran | [`amo/captures.json`](../amo/captures.json) (ordre, légendes dans chaque langue) et `amo/captures/` (PNG de 1280 × 800) |
+| page d’accueil         | `homepage_url` du manifeste                                                                                                                                                 |
+| icône                  | `extension/icons/icone-128.png`                                                                                                                                             |
+| captures d’écran       | [`amo/captures.json`](../amo/captures.json) (ordre, légendes dans chaque langue) et `amo/captures/` (PNG de 1280 × 800)                                                     |
 
 - **Langues.** La fiche parle treize des quinze langues : AMO ne propose ni
   l’arabe ni l’hindi pour le texte d’une fiche. L’espagnol, le portugais et

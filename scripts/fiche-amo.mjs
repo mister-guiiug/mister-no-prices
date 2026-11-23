@@ -49,7 +49,8 @@ export async function chargerCaptures(dossier = path.join(racine, "amo")) {
   const vues = new Set();
   return Promise.all(
     liste.map(async ({ fichier, legende }, rang) => {
-      if (!/^[\w-]+\.png$/.test(fichier ?? "")) throw new Error(`captures.json[${rang}] : nom de fichier « ${fichier} »`);
+      if (!/^[\w-]+\.png$/.test(fichier ?? ""))
+        throw new Error(`captures.json[${rang}] : nom de fichier « ${fichier} »`);
       const attendues = languesDeFiche();
       const inconnues = Object.keys(legende ?? {}).filter((l) => !attendues.includes(l));
       if (inconnues.length > 0) throw new Error(`${fichier} : langue(s) inconnue(s) ${inconnues.join(", ")}`);
@@ -65,7 +66,8 @@ export async function chargerCaptures(dossier = path.join(racine, "amo")) {
       // En-tête PNG puis IHDR : largeur et hauteur en octets 16 à 23.
       if (image.subarray(1, 4).toString() !== "PNG") throw new Error(`${fichier} n'est pas un PNG`);
       const [largeur, hauteur] = [image.readUInt32BE(16), image.readUInt32BE(20)];
-      if (largeur !== 1280 || hauteur !== 800) throw new Error(`${fichier} : ${largeur} × ${hauteur}, 1280 × 800 attendu`);
+      if (largeur !== 1280 || hauteur !== 800)
+        throw new Error(`${fichier} : ${largeur} × ${hauteur}, 1280 × 800 attendu`);
       return { fichier, legende: etendre(legende), image, position: rang }; // AMO compte à partir de 0
     }),
   );
@@ -98,7 +100,10 @@ export const LANGUES_AMO = Object.freeze({
 });
 
 /** Les langues sous lesquelles amo/ range ses textes : la première de chaque entrée de LANGUES_AMO. */
-export const languesDeFiche = () => Object.values(LANGUES_AMO).filter((c) => c.length > 0).map((c) => c[0]);
+export const languesDeFiche = () =>
+  Object.values(LANGUES_AMO)
+    .filter((c) => c.length > 0)
+    .map((c) => c[0]);
 
 /** Un texte par langue de la fiche, copié vers ses variantes régionales (es-ES → es-MX…). */
 export function etendre(textes) {
@@ -139,26 +144,30 @@ export async function ficheVoulue() {
  * fiche peut le rendre en HTML.
  */
 export function texteDe(html) {
-  return String(html ?? "")
-    .replace(/https:\/\/outgoing\.prod\.mozaws\.net\/v1\/[0-9a-f]+\/([^"'\s<]+)/g, (_, cible) => decodeURIComponent(cible))
-    .replace(/<br\s*\/?>/gi, " ")
-    // Le Markdown que la fiche accepte, rendu ou non par l'API : liens, gras,
-    // puces en début de ligne.
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-    .replace(/\*\*|__/g, "")
-    .replace(/^[ \t]*[-*+][ \t]+/gm, "")
-    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
-    .replace(/&#([0-9]+);/g, (_, n) => String.fromCodePoint(Number(n)))
-    .replace(/&nbsp;/g, " ")
-    .replace(/&quot;/g, '"')
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&amp;/g, "&")
-    // Après les entités : une balise que l'API rend échappée (&lt;b&gt;) part aussi.
-    .replace(/<[^>]+>/g, " ")
-    // Retours à la ligne, <br>, espaces insécables : la mise en forme ne compte pas.
-    .replace(/\s+/g, " ")
-    .trim();
+  return (
+    String(html ?? "")
+      .replace(/https:\/\/outgoing\.prod\.mozaws\.net\/v1\/[0-9a-f]+\/([^"'\s<]+)/g, (_, cible) =>
+        decodeURIComponent(cible),
+      )
+      .replace(/<br\s*\/?>/gi, " ")
+      // Le Markdown que la fiche accepte, rendu ou non par l'API : liens, gras,
+      // puces en début de ligne.
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+      .replace(/\*\*|__/g, "")
+      .replace(/^[ \t]*[-*+][ \t]+/gm, "")
+      .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
+      .replace(/&#([0-9]+);/g, (_, n) => String.fromCodePoint(Number(n)))
+      .replace(/&nbsp;/g, " ")
+      .replace(/&quot;/g, '"')
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&amp;/g, "&")
+      // Après les entités : une balise que l'API rend échappée (&lt;b&gt;) part aussi.
+      .replace(/<[^>]+>/g, " ")
+      // Retours à la ligne, <br>, espaces insécables : la mise en forme ne compte pas.
+      .replace(/\s+/g, " ")
+      .trim()
+  );
 }
 
 /** Une page d'accueil rendue par l'API : `{ url: {fr: …}, outgoing: … }`, ou déjà un objet de langues. */
@@ -174,7 +183,8 @@ export function ecarts(voulue, enLigne) {
     }
   }
   const accueil = urlsDe(enLigne.homepage);
-  if (Object.entries(voulue.homepage).some(([langue, url]) => accueil[langue] !== url)) champs.homepage = voulue.homepage;
+  if (Object.entries(voulue.homepage).some(([langue, url]) => accueil[langue] !== url))
+    champs.homepage = voulue.homepage;
   const categories = [enLigne.categories ?? []].flat();
   if ([...categories].sort().join() !== [...voulue.categories].sort().join()) champs.categories = voulue.categories;
   return champs;
@@ -234,7 +244,10 @@ export function planifier(voulues, enLigne) {
 }
 
 async function synchroniser(amo, id, captures) {
-  const aSupprimer = (process.env.SUPPRIMER ?? "").split(",").map((x) => x.trim()).filter(Boolean);
+  const aSupprimer = (process.env.SUPPRIMER ?? "")
+    .split(",")
+    .map((x) => x.trim())
+    .filter(Boolean);
   for (const capture of aSupprimer) {
     if (!/^\d+$/.test(capture)) throw new Error(`SUPPRIMER : « ${capture} » n'est pas un identifiant de capture`);
     if (!(await amo.captures(id)).some((c) => String(c.id) === capture)) {
@@ -269,7 +282,9 @@ async function synchroniser(amo, id, captures) {
     console.log(`capture ajoutée : ${c.fichier}`);
   }
   for (const c of etrangeres) {
-    console.log(`::warning::capture ${c.id} sur la fiche mais pas dans amo/captures.json (« ${c.caption?.fr ?? "sans légende"} ») : laissée en place`);
+    console.log(
+      `::warning::capture ${c.id} sur la fiche mais pas dans amo/captures.json (« ${c.caption?.fr ?? "sans légende"} ») : laissée en place`,
+    );
   }
   console.log(`Fiche à jour : ${(await amo.captures(id)).length} capture(s).`);
 }

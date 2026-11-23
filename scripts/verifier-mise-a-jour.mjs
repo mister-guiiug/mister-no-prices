@@ -29,8 +29,7 @@ import puppeteer from "puppeteer-core";
 const RACINE = resolve(import.meta.dirname, "..");
 const EXTENSION = resolve(RACINE, "extension");
 const VERSION_1_0 = "a21f368"; // premier commit : Amazon seul
-const ID = JSON.parse(readFileSync(resolve(EXTENSION, "manifest.json"), "utf8"))
-  .browser_specific_settings.gecko.id;
+const ID = JSON.parse(readFileSync(resolve(EXTENSION, "manifest.json"), "utf8")).browser_specific_settings.gecko.id;
 
 const FIREFOX = [
   process.env.FIREFOX,
@@ -82,9 +81,7 @@ async function dansFirefox(expression) {
 }
 
 const accesDealabs = () =>
-  dansFirefox(
-    `WebExtensionPolicy.getByID(${JSON.stringify(ID)}).allowedOrigins.matches("https://www.dealabs.com/")`,
-  );
+  dansFirefox(`WebExtensionPolicy.getByID(${JSON.stringify(ID)}).allowedOrigins.matches("https://www.dealabs.com/")`);
 
 async function ouvrirPopup() {
   const deja = new Set(await navigateur.pages());

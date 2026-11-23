@@ -29,8 +29,7 @@
   "use strict";
 
   const { DEFAUTS, lire, suivre, masquageEnCours } = globalThis.SansPrixReglages;
-  const { contientChiffre, trouverMontants, masquerMontants, estFragment } =
-    globalThis.SansPrixDetection;
+  const { contientChiffre, trouverMontants, masquerMontants, estFragment } = globalThis.SansPrixDetection;
   const { ATTRIBUT_ECLATE, trouverRegle, couvreChemin, construireFeuille } = globalThis.SansPrixMoteur;
 
   const NOM = "sans-prix";
