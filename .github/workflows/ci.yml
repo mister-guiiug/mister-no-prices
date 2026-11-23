@@ -1,9 +1,11 @@
 # La CI de l'extension, sur chaque PR et sur main.
 #
-# Trois gestes, ceux qu'on ferait avant de signer l'extension : le repérage des
-# montants (npm test), la validation du manifeste par l'outil de Mozilla
-# (web-ext lint, qui échoue sur un avertissement), et le paquet de déploiement
-# (npm run paquet, sans signature : les clés ne servent qu'à publication.yml).
+# Les gestes qu'on ferait avant de signer l'extension : le repérage des
+# montants (npm test), ESLint et le format, la validation du manifeste par
+# l'outil de Mozilla (web-ext lint, qui échoue sur un avertissement), la fiche
+# addons.mozilla.org, et le paquet de déploiement (npm run paquet, sans
+# signature : les clés ne servent qu'à publication.yml). La même chaîne que
+# mister-no-noise.
 #
 # Ce que la CI ne fait PAS : `npm run verifier`, qui visite le vrai site Amazon
 # dans un Firefox. Un relevé qui dépend d'un site tiers rougirait au gré de son
@@ -34,7 +36,7 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 26.13.1
+          node-version-file: .nvmrc
           cache: npm
 
       - run: node --version && npm --version
@@ -60,6 +62,12 @@ jobs:
             node scripts/catalogue.mjs --revision-depuis FETCH_HEAD
           fi
 
+      - run: npm run lint:js
+
+      - run: npm run format:check
+
       - run: npm run lint -- --warnings-as-errors
+
+      - run: node scripts/fiche-amo.mjs --verifier
 
       - run: npm run paquet

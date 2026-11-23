@@ -7,3 +7,5 @@ captures/
 .env
 # Les captures de la fiche addons.mozilla.org, elles, sont versionnées.
 !/amo/captures/
+_agent/
+.eslintcache

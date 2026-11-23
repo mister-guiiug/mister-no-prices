@@ -1,0 +1,3 @@
+# npm écrit le verrou à sa façon : le reformater le ferait changer à chaque
+# installation.
+package-lock.json
