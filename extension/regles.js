@@ -141,12 +141,7 @@
       ],
       // Le composant prix du système de conception Vitamin : prix, prix barré,
       // remise en euros (« -30 € »), mention « prix le plus bas ».
-      masquer: [
-        ".vp-price-amount",
-        ".vp-price-barred-amount",
-        ".vp-price-discount",
-        ".vp-price-helper",
-      ],
+      masquer: [".vp-price-amount", ".vp-price-barred-amount", ".vp-price-discount", ".vp-price-helper"],
     },
     {
       id: "cdiscount",
@@ -323,10 +318,7 @@
       nom: "Wallapop",
       domaines: ["wallapop.com"],
       // Modules CSS : classes hachées, préfixes stables.
-      masquer: [
-        '[class*="RetrievalItemCard__price"]',
-        '[class*="RetrievalItemCard__currentPrice"]',
-      ],
+      masquer: ['[class*="RetrievalItemCard__price"]', '[class*="RetrievalItemCard__currentPrice"]'],
     },
     {
       id: "marktplaats",
@@ -386,10 +378,7 @@
       ],
       // Les attributs de test sont stables, les classes hachées. Le total
       // « frais inclus » est un prix ; sa ligne « incl. », non.
-      masquer: [
-        '[data-testid$="--price-text"]',
-        '[data-testid="total-combined-price"]',
-      ],
+      masquer: ['[data-testid$="--price-text"]', '[data-testid="total-combined-price"]'],
     },
     {
       id: "backmarket",
@@ -436,20 +425,14 @@
       nom: "Reverb",
       domaines: ["reverb.com"],
       // Le prix et sa copie pour les lecteurs d'écran.
-      masquer: [
-        ".rc-price-block__price",
-        ".rc-listing-card__price",
-      ],
+      masquer: [".rc-price-block__price", ".rc-listing-card__price"],
     },
     {
       id: "discogs",
       nom: "Discogs",
       domaines: ["discogs.com"],
       // Prix du vendeur et prix converti dans la devise du visiteur.
-      masquer: [
-        "span.price",
-        ".converted_price",
-      ],
+      masquer: ["span.price", ".converted_price"],
     },
     {
       id: "delcampe",
@@ -512,7 +495,7 @@
       masquer: [
         '[aria-label^="Prix actuel"]',
         '[aria-label^="Le prix actuel"]',
-        "[aria-label^=\"L'ancien prix\"]",
+        '[aria-label^="L\'ancien prix"]',
         '[aria-label*="Avant :"]',
       ],
     },

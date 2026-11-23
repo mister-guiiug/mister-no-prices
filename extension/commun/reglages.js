@@ -37,9 +37,7 @@
       // Tout ce qui n'est pas explicitement `false` masque : en cas de doute, on cache.
       actif: brut.actif !== false,
       pauseJusqua: Number.isFinite(pause) && pause > 0 && pause <= Date.now() + PAUSE_MAX ? pause : 0,
-      sitesEteints: Array.isArray(brut.sitesEteints)
-        ? brut.sitesEteints.filter((id) => typeof id === "string")
-        : [],
+      sitesEteints: Array.isArray(brut.sitesEteints) ? brut.sitesEteints.filter((id) => typeof id === "string") : [],
       style: STYLES.includes(brut.style) ? brut.style : DEFAUTS.style,
       envies: brut.envies !== false,
       compteur: brut.compteur !== false,

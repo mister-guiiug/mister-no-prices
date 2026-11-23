@@ -52,12 +52,9 @@ function principal() {
     const actuelHost = [...(manifeste.host_permissions || [])].sort();
     const actuelMatches = [...(manifeste.content_scripts?.[0]?.matches || [])].sort();
     const ok =
-      JSON.stringify(actuelHost) === JSON.stringify(motifs) &&
-      JSON.stringify(actuelMatches) === JSON.stringify(motifs);
+      JSON.stringify(actuelHost) === JSON.stringify(motifs) && JSON.stringify(actuelMatches) === JSON.stringify(motifs);
     if (!ok) {
-      console.error(
-        "extension/manifest.json n'est pas aligné sur les règles : npm run manifeste",
-      );
+      console.error("extension/manifest.json n'est pas aligné sur les règles : npm run manifeste");
       process.exit(1);
     }
     console.log(`Manifeste aligné (${motifs.length} motifs).`);

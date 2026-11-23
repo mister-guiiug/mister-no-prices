@@ -58,14 +58,14 @@ move to the listed version, then to the listing. Every release still carries it.
 everything needed to install the extension on a computer without knowing
 anything about this repository:
 
-| File | Purpose |
-| ---- | ------- |
-| `mister-no-prices-<version>.xpi` | the extension signed by Mozilla — only with API keys |
-| `mister-no-prices-<version>.zip` | the unsigned extension |
-| `INSTALLER.md` | step-by-step install guide for non-developers (in French) |
-| `policies.json` | Firefox enterprise policy that **enforces** the extension on a family computer: installed for every session, cannot be removed or disabled from `about:addons` |
-| `updates.json` | what copies installed up to 1.7.0 read to update themselves |
-| `SHA256SUMS` | checksums, for `sha256sum -c` |
+| File                             | Purpose                                                                                                                                                        |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mister-no-prices-<version>.xpi` | the extension signed by Mozilla — only with API keys                                                                                                           |
+| `mister-no-prices-<version>.zip` | the unsigned extension                                                                                                                                         |
+| `INSTALLER.md`                   | step-by-step install guide for non-developers (in French)                                                                                                      |
+| `policies.json`                  | Firefox enterprise policy that **enforces** the extension on a family computer: installed for every session, cannot be removed or disabled from `about:addons` |
+| `updates.json`                   | what copies installed up to 1.7.0 read to update themselves                                                                                                    |
+| `SHA256SUMS`                     | checksums, for `sha256sum -c`                                                                                                                                  |
 
 The guide and the policy come from [`deploiement/`](../deploiement/), filled
 with the manifest’s version and ID.
@@ -83,13 +83,13 @@ The listing is kept in the repository.
 whenever its sources change on `main`, and daily: AMO only reads the name and
 summary from the manifest when the listing is created, and never its icon.
 
-| On the listing | Comes from |
-| -------------- | ---------- |
-| name, summary | `extName`, `extDescription` of each extension language the listing supports |
+| On the listing        | Comes from                                                                                                                                                      |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| name, summary         | `extName`, `extDescription` of each extension language the listing supports                                                                                     |
 | description, category | [`amo/fiche.json`](../amo/fiche.json), one description per language, in limited Markdown (`**bold**`, `- ` lists, `[text](url)` links): AMO shows HTML verbatim |
-| homepage | the manifest’s `homepage_url` |
-| icon | `extension/icons/icone-128.png` |
-| screenshots | [`amo/captures.json`](../amo/captures.json) (order, captions in each language) and `amo/captures/` (1280 × 800 PNG) |
+| homepage              | the manifest’s `homepage_url`                                                                                                                                   |
+| icon                  | `extension/icons/icone-128.png`                                                                                                                                 |
+| screenshots           | [`amo/captures.json`](../amo/captures.json) (order, captions in each language) and `amo/captures/` (1280 × 800 PNG)                                             |
 
 - **Languages.** The listing speaks thirteen of the fifteen languages: AMO
   offers neither Arabic nor Hindi for listing text. Spanish, Portuguese and

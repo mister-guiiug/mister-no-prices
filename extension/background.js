@@ -124,9 +124,7 @@ browser.runtime.onMessage.addListener((message, expediteur) => {
   const n = Number(message.n) || 0;
   const texte = n > 0 ? (n > 99 ? "99+" : String(n)) : null;
   browser.action.setBadgeText({ tabId: onglet, text: texte }).catch(() => {});
-  browser.action
-    .setBadgeBackgroundColor({ tabId: onglet, color: texte ? "#7048e8" : null })
-    .catch(() => {});
+  browser.action.setBadgeBackgroundColor({ tabId: onglet, color: texte ? "#7048e8" : null }).catch(() => {});
 });
 
 browser.alarms?.onAlarm.addListener((alarme) => {

@@ -58,7 +58,10 @@ describe("la publication et les mises à jour", async () => {
       `https://github.com/mister-guiiug/mister-no-prices/releases/download/v${manifeste.version}/${nomXpi(manifeste.version)}`,
     );
     assert.equal(maj.update_hash, `sha256:${EMPREINTE}`);
-    assert.equal(maj.applications.gecko.strict_min_version, manifeste.browser_specific_settings.gecko.strict_min_version);
+    assert.equal(
+      maj.applications.gecko.strict_min_version,
+      manifeste.browser_specific_settings.gecko.strict_min_version,
+    );
   });
 
   it("refuse une empreinte invalide et une homepage_url hors GitHub", () => {
@@ -74,9 +77,21 @@ describe("la fiche d'addons.mozilla.org", async () => {
   const { etatDe, jeton } = await import("../scripts/amo.mjs");
   // Les catégories des extensions Firefox dans l'API v5.
   const CATEGORIES = [
-    "alerts-updates", "appearance", "bookmarks", "download-management", "feeds-news-blogging",
-    "games-entertainment", "language-support", "photos-music-videos", "privacy-security",
-    "search-tools", "shopping", "social-communication", "tabs", "web-development", "other",
+    "alerts-updates",
+    "appearance",
+    "bookmarks",
+    "download-management",
+    "feeds-news-blogging",
+    "games-entertainment",
+    "language-support",
+    "photos-music-videos",
+    "privacy-security",
+    "search-tools",
+    "shopping",
+    "social-communication",
+    "tabs",
+    "web-development",
+    "other",
   ];
 
   it("a des catégories connues et la licence du dépôt", () => {
@@ -96,8 +111,25 @@ describe("la fiche d'addons.mozilla.org", async () => {
   it("ne cite que des sites des règles", async () => {
     await import("../extension/regles.js");
     const noms = globalThis.SansPrixRegles.map((r) => r.nom);
-    const cites = ["Amazon", "Fnac", "Darty", "Boulanger", "Decathlon", "Cdiscount", "eBay", "AliExpress",
-      "Zalando", "Leboncoin", "Vinted", "Back Market", "Craigslist", "Facebook Marketplace", "Reverb", "Discogs", "Google"];
+    const cites = [
+      "Amazon",
+      "Fnac",
+      "Darty",
+      "Boulanger",
+      "Decathlon",
+      "Cdiscount",
+      "eBay",
+      "AliExpress",
+      "Zalando",
+      "Leboncoin",
+      "Vinted",
+      "Back Market",
+      "Craigslist",
+      "Facebook Marketplace",
+      "Reverb",
+      "Discogs",
+      "Google",
+    ];
     for (const nom of cites) assert.ok(noms.includes(nom), nom);
     for (const nom of cites.filter((n) => n !== "Google")) {
       assert.ok(fiche.description.fr.includes(nom) || fiche.description["en-US"].includes(nom), nom);
@@ -123,7 +155,11 @@ describe("la fiche d'addons.mozilla.org", async () => {
 
 describe("le client d'addons.mozilla.org", async () => {
   const { client } = await import("../scripts/amo.mjs");
-  const json = (corps) => ({ ok: true, headers: new Headers({ "content-type": "application/json" }), json: async () => corps });
+  const json = (corps) => ({
+    ok: true,
+    headers: new Headers({ "content-type": "application/json" }),
+    json: async () => corps,
+  });
 
   it("cherche la version sur toutes les pages, tous canaux, avec un jeton", async () => {
     const vues = [];
@@ -144,7 +180,10 @@ describe("le client d'addons.mozilla.org", async () => {
     let appels = 0;
     const fetch = async () => {
       appels += 1;
-      return json({ results: [{ version: "1.8.0", file: { status: appels < 3 ? "unreviewed" : "public" } }], next: null });
+      return json({
+        results: [{ version: "1.8.0", file: { status: appels < 3 ? "unreviewed" : "public" } }],
+        next: null,
+      });
     };
     const amo = client({ cle: "k", secret: "s", fetch });
     const dormir = async () => {};
@@ -173,7 +212,10 @@ describe("les captures de la fiche", async () => {
       assert.equal(c.legende["es-MX"], c.legende["es-ES"], c.fichier);
       assert.equal(c.legende["en-GB"], c.legende["en-US"], c.fichier);
     }
-    assert.deepEqual(captures.map((c) => c.position), captures.map((_, i) => i));
+    assert.deepEqual(
+      captures.map((c) => c.position),
+      captures.map((_, i) => i),
+    );
   });
 
   const voulues = [
@@ -186,15 +228,27 @@ describe("les captures de la fiche", async () => {
       { id: 7, caption: { fr: "B", "en-US": "vieux" }, position: 2 },
       { id: 9, caption: { fr: "Faite à la main" }, position: 3 },
     ]);
-    assert.deepEqual(ajouter.map((c) => c.fichier), ["a.png"]);
-    assert.deepEqual(modifier.map((c) => [c.fichier, c.id]), [["b.png", 7]]);
-    assert.deepEqual(etrangeres.map((c) => c.id), [9]);
+    assert.deepEqual(
+      ajouter.map((c) => c.fichier),
+      ["a.png"],
+    );
+    assert.deepEqual(
+      modifier.map((c) => [c.fichier, c.id]),
+      [["b.png", 7]],
+    );
+    assert.deepEqual(
+      etrangeres.map((c) => c.id),
+      [9],
+    );
   });
 
   it("remet d'aplomb une capture dont une seule langue diffère", () => {
     const enLigne = voulues.map((c, i) => ({ id: i, caption: { ...c.legende }, position: c.position }));
     const voulue = [{ ...voulues[0], legende: { ...voulues[0].legende, ja: "新しい" } }, voulues[1]];
-    assert.deepEqual(planifier(voulue, enLigne).modifier.map((c) => c.fichier), ["a.png"]);
+    assert.deepEqual(
+      planifier(voulue, enLigne).modifier.map((c) => c.fichier),
+      ["a.png"],
+    );
   });
 
   it("ne fait rien quand la fiche est à jour", () => {
@@ -205,7 +259,12 @@ describe("les captures de la fiche", async () => {
 
 describe("l'envoi d'une capture", async () => {
   const { client } = await import("../scripts/amo.mjs");
-  const json = (corps) => ({ ok: true, status: 200, headers: new Headers({ "content-type": "application/json" }), json: async () => corps });
+  const json = (corps) => ({
+    ok: true,
+    status: 200,
+    headers: new Headers({ "content-type": "application/json" }),
+    json: async () => corps,
+  });
   const legende = { fr: "Une", "en-US": "One" };
 
   /** Un faux AMO : la légende posée est effacée `effacements` fois par le retraitement de l'image. */
@@ -227,11 +286,16 @@ describe("l'envoi d'une capture", async () => {
   it("envoie l'image en multipart, attend son traitement, légende en JSON, vérifie", async () => {
     const { appels, fetch } = faux(0);
     const attentes = [];
-    const capture = await client({ cle: "k", secret: "s", fetch, dormir: async (ms) => attentes.push(ms) }).ajouterCapture(
-      "a@b",
-      { image: Buffer.from("png"), nom: "1.png", legende, position: 3 },
+    const capture = await client({
+      cle: "k",
+      secret: "s",
+      fetch,
+      dormir: async (ms) => attentes.push(ms),
+    }).ajouterCapture("a@b", { image: Buffer.from("png"), nom: "1.png", legende, position: 3 });
+    assert.deepEqual(
+      appels.map((a) => a.method),
+      ["POST", "PATCH", "GET"],
     );
-    assert.deepEqual(appels.map((a) => a.method), ["POST", "PATCH", "GET"]);
     assert.match(appels[0].url, /addons\/addon\/a%40b\/previews\/$/);
     assert.ok(appels[0].corps instanceof FormData);
     assert.equal(appels[0].corps.get("position"), "3");
@@ -245,16 +309,25 @@ describe("l'envoi d'une capture", async () => {
   it("repose la légende qu'AMO a effacée", async () => {
     const { appels, fetch } = faux(1);
     await client({ cle: "k", secret: "s", fetch, dormir: async () => {} }).ajouterCapture("a@b", {
-      image: Buffer.from("png"), nom: "1.png", legende, position: 3,
+      image: Buffer.from("png"),
+      nom: "1.png",
+      legende,
+      position: 3,
     });
-    assert.deepEqual(appels.map((a) => a.method), ["POST", "PATCH", "GET", "PATCH", "GET"]);
+    assert.deepEqual(
+      appels.map((a) => a.method),
+      ["POST", "PATCH", "GET", "PATCH", "GET"],
+    );
   });
 
   it("abandonne et retire la capture après trois effacements", async () => {
     const { appels, fetch } = faux(10);
     await assert.rejects(
       client({ cle: "k", secret: "s", fetch, dormir: async () => {} }).ajouterCapture("a@b", {
-        image: Buffer.from("png"), nom: "1.png", legende, position: 3,
+        image: Buffer.from("png"),
+        nom: "1.png",
+        legende,
+        position: 3,
       }),
       /effacée 3 fois/,
     );
@@ -271,7 +344,9 @@ describe("la fiche tenue par le dépôt", async () => {
     const { readdirSync } = await import("node:fs");
     const dossiers = readdirSync(new URL("../extension/_locales/", import.meta.url));
     assert.deepEqual(Object.keys(LANGUES_AMO).sort(), dossiers.sort());
-    const premieres = Object.values(LANGUES_AMO).filter((c) => c.length > 0).map((c) => c[0]);
+    const premieres = Object.values(LANGUES_AMO)
+      .filter((c) => c.length > 0)
+      .map((c) => c[0]);
     assert.deepEqual(Object.keys(JSON.parse(lire("amo/fiche.json")).description).sort(), premieres.sort());
     // AMO ne propose ni l'arabe ni l'hindi pour le texte d'une fiche.
     assert.deepEqual([LANGUES_AMO.ar, LANGUES_AMO.hi], [[], []]);
@@ -290,7 +365,10 @@ describe("la fiche tenue par le dépôt", async () => {
   it("ne modifie que ce qui diffère, page d'accueil lue sous ses liens sortants", () => {
     const enLigne = {
       ...structuredClone(voulue),
-      homepage: { url: { fr: "https://github.com/mister-guiiug/mister-no-price", "en-US": voulue.homepage["en-US"] }, outgoing: {} },
+      homepage: {
+        url: { fr: "https://github.com/mister-guiiug/mister-no-price", "en-US": voulue.homepage["en-US"] },
+        outgoing: {},
+      },
       summary: { fr: "Ancien résumé", "en-US": voulue.summary["en-US"] },
     };
     assert.deepEqual(Object.keys(ecarts(voulue, enLigne)).sort(), ["homepage", "summary"]);
@@ -300,20 +378,28 @@ describe("la fiche tenue par le dépôt", async () => {
 
   it("reconnaît l'icône par défaut", () => {
     assert.ok(iconeParDefaut({ icon_url: "https://addons.mozilla.org/static-server/img/addon-icons/default-64.png" }));
-    assert.ok(!iconeParDefaut({ icon_url: "https://addons.mozilla.org/user-media/addon_icons/3/123-64.png?modified=1" }));
+    assert.ok(
+      !iconeParDefaut({ icon_url: "https://addons.mozilla.org/user-media/addon_icons/3/123-64.png?modified=1" }),
+    );
   });
 });
 
 describe("le débit limité d'addons.mozilla.org", async () => {
   const { client, delaiDemande } = await import("../scripts/amo.mjs");
   const json = (corps, status = 200) => ({
-    ok: status < 400, status, headers: new Headers({ "content-type": "application/json" }),
-    json: async () => corps, text: async () => JSON.stringify(corps),
+    ok: status < 400,
+    status,
+    headers: new Headers({ "content-type": "application/json" }),
+    json: async () => corps,
+    text: async () => JSON.stringify(corps),
   });
 
   it("lit le délai demandé", () => {
     assert.equal(delaiDemande(new Headers({ "retry-after": "12" }), ""), 12_000);
-    assert.equal(delaiDemande(new Headers(), '{"detail":"Request was throttled. Expected available in 59 seconds."}'), 59_000);
+    assert.equal(
+      delaiDemande(new Headers(), '{"detail":"Request was throttled. Expected available in 59 seconds."}'),
+      59_000,
+    );
     assert.equal(delaiDemande(new Headers(), ""), 60_000);
   });
 
@@ -342,7 +428,10 @@ describe("le débit limité d'addons.mozilla.org", async () => {
       return { ok: true, status: 204, headers: new Headers(), text: async () => "" };
     };
     const amo = client({ cle: "k", secret: "s", fetch, dormir: async () => {} });
-    await assert.rejects(amo.ajouterCapture("a@b", { image: Buffer.from("x"), nom: "a.png", legende: { fr: "a" }, position: 1 }), /AMO 400/);
+    await assert.rejects(
+      amo.ajouterCapture("a@b", { image: Buffer.from("x"), nom: "a.png", legende: { fr: "a" }, position: 1 }),
+      /AMO 400/,
+    );
     assert.deepEqual(methodes, ["POST", "PATCH", "DELETE"]);
   });
 });
@@ -360,8 +449,14 @@ describe("la reprise d'une fiche à moitié faite", async () => {
       { id: 1, caption: { fr: "A", "en-US": "A en" }, position: 0 },
       { id: 2, caption: null, position: 1 },
     ]);
-    assert.deepEqual(modifier.map((c) => [c.fichier, c.id, c.reprise]), [["b.png", 2, true]]);
-    assert.deepEqual(ajouter.map((c) => c.fichier), ["c.png"]);
+    assert.deepEqual(
+      modifier.map((c) => [c.fichier, c.id, c.reprise]),
+      [["b.png", 2, true]],
+    );
+    assert.deepEqual(
+      ajouter.map((c) => c.fichier),
+      ["c.png"],
+    );
     assert.deepEqual(etrangeres, []);
   });
 
@@ -372,7 +467,10 @@ describe("la reprise d'une fiche à moitié faite", async () => {
     ]);
     assert.deepEqual(modifier, []);
     assert.equal(ajouter.length, 3);
-    assert.deepEqual(etrangeres.map((c) => c.id), [2, 3]);
+    assert.deepEqual(
+      etrangeres.map((c) => c.id),
+      [2, 3],
+    );
   });
 
   it("compare la description sans les liens enveloppés ni les balises", () => {
@@ -385,7 +483,10 @@ describe("la reprise d'une fiche à moitié faite", async () => {
   it("ne réécrit pas une description rendue avec ses liens enveloppés", async () => {
     const voulue = await ficheVoulue();
     const enveloppe = (t) =>
-      t.replace(/https:\/\/github\.com\/[\w/-]+/g, (u) => `<a href="https://outgoing.prod.mozaws.net/v1/abc123/${encodeURIComponent(u)}">${u}</a>`);
+      t.replace(
+        /https:\/\/github\.com\/[\w/-]+/g,
+        (u) => `<a href="https://outgoing.prod.mozaws.net/v1/abc123/${encodeURIComponent(u)}">${u}</a>`,
+      );
     const enLigne = {
       ...structuredClone(voulue),
       description: Object.fromEntries(Object.entries(voulue.description).map(([l, t]) => [l, enveloppe(t)])),
@@ -410,7 +511,11 @@ describe("la comparaison de la description, quelle que soit sa mise en forme", a
   });
 
   it("dit où un champ diffère", () => {
-    const message = apercu("summary", { fr: "Masque les prix des boutiques" }, { summary: { fr: "Masque les prix sur Amazon" } });
+    const message = apercu(
+      "summary",
+      { fr: "Masque les prix des boutiques" },
+      { summary: { fr: "Masque les prix sur Amazon" } },
+    );
     assert.match(message, /^fr, caractère 16 : « sur Amazon » au lieu de « des boutiques »$/);
   });
 });
@@ -453,7 +558,10 @@ describe("le débit limité d'addons.mozilla.org à la soumission", async () => 
 
   it("laisse échouer tout le reste", () => {
     assert.equal(estDebitLimite(new Error("Submission failed (1): 400")), false);
-    assert.equal(estDebitLimite(new Error("AMO 404 sur GET https://addons.mozilla.org/api/v5/addons/addon/x/versions/6750429/")), false);
+    assert.equal(
+      estDebitLimite(new Error("AMO 404 sur GET https://addons.mozilla.org/api/v5/addons/addon/x/versions/6750429/")),
+      false,
+    );
     assert.equal(estDebitLimite(new Error("getaddrinfo ENOTFOUND addons.mozilla.org")), false);
     assert.equal(estDebitLimite(undefined), false);
   });

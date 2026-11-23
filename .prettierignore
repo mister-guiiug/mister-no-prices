@@ -1,3 +1,12 @@
 # npm écrit le verrou à sa façon : le reformater le ferait changer à chaque
 # installation.
 package-lock.json
+
+# Engendré par scripts/catalogue.mjs, et comparé tel quel par sa CI : le
+# catalogue que les installations lisent chaque jour.
+regles/regles.json
+
+# Réécrit par scripts/manifeste.mjs (JSON.stringify) à chaque changement des
+# règles : reformaté, il ferait échouer le format après le prochain
+# « npm run manifeste ».
+extension/manifest.json

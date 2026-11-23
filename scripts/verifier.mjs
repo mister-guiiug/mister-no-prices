@@ -39,8 +39,8 @@ const CAPTURES = resolve(RACINE, MOBILE ? "captures/mobile" : "captures");
 
 const SITES = process.env.SITES ? process.env.SITES.split(",") : Object.keys(PAGES);
 
-const ID_EXTENSION = JSON.parse(readFileSync(resolve(EXTENSION, "manifest.json"), "utf8"))
-  .browser_specific_settings.gecko.id;
+const ID_EXTENSION = JSON.parse(readFileSync(resolve(EXTENSION, "manifest.json"), "utf8")).browser_specific_settings
+  .gecko.id;
 const DETECTION = readFileSync(resolve(EXTENSION, "content/detection.js"), "utf8");
 
 function trouverFirefox() {
@@ -176,9 +176,7 @@ async function releverMontantsVisibles(page) {
       if (!parent || ["SCRIPT", "STYLE", "NOSCRIPT", "TEMPLATE"].includes(parent.nodeName)) continue;
       for (const { debut, fin } of trouverMontants(n.data)) {
         total += 1;
-        const couvert = plages.some(
-          (p) => p.startContainer === n && p.startOffset <= debut && p.endOffset >= fin,
-        );
+        const couvert = plages.some((p) => p.startContainer === n && p.startOffset <= debut && p.endOffset >= fin);
         if (couvert || !lisible(parent)) continue;
         const r = document.createRange();
         r.setStart(n, debut);
@@ -303,9 +301,7 @@ async function essayerEnvie(page) {
     });
     if (etat === "true") return true;
     if (etat === "false") {
-      await page.evaluate(() =>
-        document.querySelector("sans-prix-envie").shadowRoot.querySelector("button").click(),
-      );
+      await page.evaluate(() => document.querySelector("sans-prix-envie").shadowRoot.querySelector("button").click());
       await attendre(800);
       continue;
     }

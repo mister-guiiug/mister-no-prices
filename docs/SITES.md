@@ -20,62 +20,62 @@ A site that answers with an anti-bot check is reported as such: the script
 never bypasses it. `VISIBLE=1` opens the window so you can pass the check
 yourself.
 
-| Symbol | Meaning |
-| ------ | ------- |
-| ✔ | listing and product page visited, no readable amount; for ♥, the item added to the list with title, picture and price |
-| ◐ listing ✔ | the listing page is verified; the product page answered with an anti-bot check or did not finish loading within a minute |
-| ✘ anti-bot | markup not inspected; the generic mechanisms apply, but their result was not seen |
-| generic only | the rule has no site-specific selector: amount detection in the text does all the work |
+| Symbol       | Meaning                                                                                                                  |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| ✔            | listing and product page visited, no readable amount; for ♥, the item added to the list with title, picture and price    |
+| ◐ listing ✔  | the listing page is verified; the product page answered with an anti-bot check or did not finish loading within a minute |
+| ✘ anti-bot   | markup not inspected; the generic mechanisms apply, but their result was not seen                                        |
+| generic only | the rule has no site-specific selector: amount detection in the text does all the work                                   |
 
 ## Stores
 
-| Site | Domains covered | Prices hidden (desktop) | ♥ button | Mobile site |
-| ---- | --------------- | ----------------------- | -------- | ----------- |
-| **Amazon** | 23 stores | ✔ amazon.fr, .com, .co.uk, .de, .es, .it | ✔ all six | ✔ amazon.fr, .com |
-| **AliExpress** | aliexpress.com | ✔ | ✔ | not verified (timeout) |
-| **Auchan** | auchan.fr | ✔ | ✔ | ✔ |
-| **Boulanger** | boulanger.com | ✔ | ✔ | ✔ |
-| **Cdiscount** | cdiscount.com | ✔ | ✔ | ✔ |
-| **Dealabs** | dealabs.com | ✔ | ✔ (`fiche` rule, 2026-11-18) | ✔ |
-| **Decathlon** | 11 countries | ✔ decathlon.fr | ✔ | ✔ |
-| **E.Leclerc** | e.leclerc, leclerc.fr | ✔ | ✔ | ✔ |
-| **eBay** | ebay.fr, ebay.com | ✔ both | ✔ both | ✔ ebay.fr |
-| **LDLC** | ldlc.com | ✔ | ✔ | ✔ |
-| **Rue du Commerce** | rueducommerce.fr | ✔ | ✔ | ✔ |
-| **Zalando** | zalando.fr | ✔ (generic only) | ✔ | ✔ |
-| **Fnac** | fnac.com | ✘ anti-bot; rule taken from the listing, seen once | rule not verified | ✘ anti-bot |
-| **Darty** | darty.com | ✘ anti-bot; generic only | ✘ | ✘ |
-| **Carrefour** | carrefour.fr | ✘ anti-bot; generic only | ✘ | ✘ |
-| **ManoMano** | manomano.fr | ✘ anti-bot; generic only | ✘ | ✘ |
-| **Google** | www.google.fr, .com, .be, .ch, … (9) | ◐ search and Images, see below | — no product page | ✘ anti-bot |
+| Site                | Domains covered                      | Prices hidden (desktop)                            | ♥ button                     | Mobile site            |
+| ------------------- | ------------------------------------ | -------------------------------------------------- | ---------------------------- | ---------------------- |
+| **Amazon**          | 23 stores                            | ✔ amazon.fr, .com, .co.uk, .de, .es, .it           | ✔ all six                    | ✔ amazon.fr, .com      |
+| **AliExpress**      | aliexpress.com                       | ✔                                                  | ✔                            | not verified (timeout) |
+| **Auchan**          | auchan.fr                            | ✔                                                  | ✔                            | ✔                      |
+| **Boulanger**       | boulanger.com                        | ✔                                                  | ✔                            | ✔                      |
+| **Cdiscount**       | cdiscount.com                        | ✔                                                  | ✔                            | ✔                      |
+| **Dealabs**         | dealabs.com                          | ✔                                                  | ✔ (`fiche` rule, 2026-11-18) | ✔                      |
+| **Decathlon**       | 11 countries                         | ✔ decathlon.fr                                     | ✔                            | ✔                      |
+| **E.Leclerc**       | e.leclerc, leclerc.fr                | ✔                                                  | ✔                            | ✔                      |
+| **eBay**            | ebay.fr, ebay.com                    | ✔ both                                             | ✔ both                       | ✔ ebay.fr              |
+| **LDLC**            | ldlc.com                             | ✔                                                  | ✔                            | ✔                      |
+| **Rue du Commerce** | rueducommerce.fr                     | ✔                                                  | ✔                            | ✔                      |
+| **Zalando**         | zalando.fr                           | ✔ (generic only)                                   | ✔                            | ✔                      |
+| **Fnac**            | fnac.com                             | ✘ anti-bot; rule taken from the listing, seen once | rule not verified            | ✘ anti-bot             |
+| **Darty**           | darty.com                            | ✘ anti-bot; generic only                           | ✘                            | ✘                      |
+| **Carrefour**       | carrefour.fr                         | ✘ anti-bot; generic only                           | ✘                            | ✘                      |
+| **ManoMano**        | manomano.fr                          | ✘ anti-bot; generic only                           | ✘                            | ✘                      |
+| **Google**          | www.google.fr, .com, .be, .ch, … (9) | ◐ search and Images, see below                     | — no product page            | ✘ anti-bot             |
 
 The other Amazon and Decathlon domains share the markup of the verified site
 without having been verified themselves.
 
 ## Classifieds and second-hand
 
-| Site | Domains covered | Prices hidden (desktop) | ♥ button | Mobile site |
-| ---- | --------------- | ----------------------- | -------- | ----------- |
-| **Catawiki** | catawiki.com | ✔ | ✔ | ✔ |
-| **Cash Express** | cashexpress.fr | ✔ | ✔ | ✔ |
-| **Craigslist** | craigslist.org (every city) | ✔ (generic only) | ✔ | ✔ |
-| **Delcampe** | delcampe.net | ✔ | ✔ | ✔ |
-| **Easy Cash** | easycash.fr | ✔ | ✔ | ✔ |
-| **Facebook Marketplace** | facebook.com, `/marketplace` only | ✔ (generic only), logged out | ✘ no structured data | ◐ listing ✔ |
-| **Kleinanzeigen** | kleinanzeigen.de | ✔ (generic only) | ✔ | ✔ |
-| **Marktplaats** | marktplaats.nl | ✔ | ✔ | ✔ |
-| **ParuVendu** | paruvendu.fr | ✔ (generic only) | ✔ | ✔ |
-| **Subito** | subito.it | ✔ | ✔ | ✔ |
-| **Vinted** | 12 countries | ✔ vinted.fr | ✔ | ✔ |
-| **Wallapop** | wallapop.com | ✔ | ✔ | ✔ |
-| **Vivastreet** | vivastreet.com | ✔ (generic only) | ✘ pages seen without product data | ✔ |
-| **Leboncoin** | leboncoin.fr | ◐ listing ✔; product page: anti-bot | not verified | ◐ listing ✔ |
-| **Discogs** | discogs.com | ◐ listing ✔; product page: timeout | not verified | ◐ listing ✔ |
-| **Reverb** | reverb.com | ◐ listing ✔; product page: timeout | not verified | ◐ listing ✔ |
-| **Vestiaire Collective** | vestiairecollective.com | ◐ listing ✔; product page: timeout | not verified | ◐ listing ✔ |
-| **Back Market** | 10 countries | ✘ anti-bot; generic only | ✘ | ✘ |
-| **Chrono24** | 10 countries | ✘ anti-bot; generic only | ✘ | ✘ |
-| **Milanuncios** | milanuncios.com | ✘ visit interrupted; generic only | ✘ | ✘ |
+| Site                     | Domains covered                   | Prices hidden (desktop)             | ♥ button                          | Mobile site |
+| ------------------------ | --------------------------------- | ----------------------------------- | --------------------------------- | ----------- |
+| **Catawiki**             | catawiki.com                      | ✔                                   | ✔                                 | ✔           |
+| **Cash Express**         | cashexpress.fr                    | ✔                                   | ✔                                 | ✔           |
+| **Craigslist**           | craigslist.org (every city)       | ✔ (generic only)                    | ✔                                 | ✔           |
+| **Delcampe**             | delcampe.net                      | ✔                                   | ✔                                 | ✔           |
+| **Easy Cash**            | easycash.fr                       | ✔                                   | ✔                                 | ✔           |
+| **Facebook Marketplace** | facebook.com, `/marketplace` only | ✔ (generic only), logged out        | ✘ no structured data              | ◐ listing ✔ |
+| **Kleinanzeigen**        | kleinanzeigen.de                  | ✔ (generic only)                    | ✔                                 | ✔           |
+| **Marktplaats**          | marktplaats.nl                    | ✔                                   | ✔                                 | ✔           |
+| **ParuVendu**            | paruvendu.fr                      | ✔ (generic only)                    | ✔                                 | ✔           |
+| **Subito**               | subito.it                         | ✔                                   | ✔                                 | ✔           |
+| **Vinted**               | 12 countries                      | ✔ vinted.fr                         | ✔                                 | ✔           |
+| **Wallapop**             | wallapop.com                      | ✔                                   | ✔                                 | ✔           |
+| **Vivastreet**           | vivastreet.com                    | ✔ (generic only)                    | ✘ pages seen without product data | ✔           |
+| **Leboncoin**            | leboncoin.fr                      | ◐ listing ✔; product page: anti-bot | not verified                      | ◐ listing ✔ |
+| **Discogs**              | discogs.com                       | ◐ listing ✔; product page: timeout  | not verified                      | ◐ listing ✔ |
+| **Reverb**               | reverb.com                        | ◐ listing ✔; product page: timeout  | not verified                      | ◐ listing ✔ |
+| **Vestiaire Collective** | vestiairecollective.com           | ◐ listing ✔; product page: timeout  | not verified                      | ◐ listing ✔ |
+| **Back Market**          | 10 countries                      | ✘ anti-bot; generic only            | ✘                                 | ✘           |
+| **Chrono24**             | 10 countries                      | ✘ anti-bot; generic only            | ✘                                 | ✘           |
+| **Milanuncios**          | milanuncios.com                   | ✘ visit interrupted; generic only   | ✘                                 | ✘           |
 
 Rakuten is not listed: its French marketplace closed on 30 September 2026.
 

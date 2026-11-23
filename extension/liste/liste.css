@@ -31,7 +31,9 @@ body {
   margin: 0;
   background: var(--fond);
   color: var(--texte);
-  font: 1rem/1.45 system-ui, sans-serif;
+  font:
+    1rem/1.45 system-ui,
+    sans-serif;
 }
 
 main {

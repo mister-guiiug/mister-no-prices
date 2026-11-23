@@ -11,8 +11,7 @@ vm.runInContext(source, contexte);
 const { trouverMontants, masquerMontants, estFragment } = contexte.SansPrixDetection;
 
 /** Les montants trouvés, sous forme de texte (tableau du domaine courant). */
-const montants = (texte) =>
-  Array.from(trouverMontants(texte), ({ debut, fin }) => texte.slice(debut, fin));
+const montants = (texte) => Array.from(trouverMontants(texte), ({ debut, fin }) => texte.slice(debut, fin));
 
 const NBSP = " "; // espace insécable, celle d'amazon.fr avant €
 const NNBSP = " "; // espace fine insécable, séparateur des milliers
