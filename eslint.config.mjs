@@ -1,4 +1,4 @@
-// ESLint (configuration plate, ESLint 9). La même forme dans mister-no-prices
+// ESLint (configuration plate, ESLint 10). La même forme dans mister-no-prices
 // et mister-no-noise : le code de l'extension en scripts classiques du
 // navigateur, les scripts et les tests en modules Node. Seule `PROPRES` change
 // d'un dépôt à l'autre.
