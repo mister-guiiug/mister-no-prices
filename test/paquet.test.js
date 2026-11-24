@@ -103,7 +103,9 @@ describe("la fiche d'addons.mozilla.org", async () => {
   it("décrit l'extension dans chaque langue de la fiche, avec le dépôt", () => {
     for (const langue of Object.keys(fiche.description)) {
       assert.ok(fiche.description[langue]?.length > 200, langue);
-      assert.match(fiche.description[langue], /github\.com\/mister-guiiug\/mister-no-prices/);
+      // Une sous-chaîne et non une regex : CodeQL lit toute regex d'adresse sans ancre
+      // comme un filtre d'URL contournable (js/regex/missing-regexp-anchor).
+      assert.ok(fiche.description[langue].includes("https://github.com/mister-guiiug/mister-no-prices"), langue);
     }
   });
 
