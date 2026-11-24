@@ -103,9 +103,14 @@ describe("la fiche d'addons.mozilla.org", async () => {
   it("décrit l'extension dans chaque langue de la fiche, avec le dépôt", () => {
     for (const langue of Object.keys(fiche.description)) {
       assert.ok(fiche.description[langue]?.length > 200, langue);
-      // Une sous-chaîne et non une regex : CodeQL lit toute regex d'adresse sans ancre
-      // comme un filtre d'URL contournable (js/regex/missing-regexp-anchor).
-      assert.ok(fiche.description[langue].includes("https://github.com/mister-guiiug/mister-no-prices"), langue);
+      // Les liens sont lus comme des URL, hôte et chemin comparés à l'égal : une regex
+      // d'adresse sans ancre ou une sous-chaîne, CodeQL les lit comme un filtre d'URL
+      // contournable (js/regex/missing-regexp-anchor, js/incomplete-url-substring-sanitization).
+      const liens = (fiche.description[langue].match(/https:\/\/[^\s)\]]+/g) ?? []).map((lien) => new URL(lien));
+      assert.ok(
+        liens.some((url) => url.hostname === "github.com" && url.pathname === "/mister-guiiug/mister-no-prices"),
+        langue,
+      );
     }
   });
 
